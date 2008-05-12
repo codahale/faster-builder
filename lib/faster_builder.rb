@@ -1,4 +1,4 @@
-require "libxml"
+require "xml/libxml"
 
 module FasterBuilder
 end

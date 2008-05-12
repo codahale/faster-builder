@@ -1,4 +1,3 @@
-require "xml/libxml"
 require "builder"
 require "faster_builder"
 
