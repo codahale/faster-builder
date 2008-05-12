@@ -164,11 +164,9 @@ describe FasterBuilder::XmlMarkup do
       @xml.target!.should == '<a title="&quot;x&quot;"/>'
     end
     
-    it "should not escape directly appended text" do
-      # TODO: figure out if I want to allow users to insert raw XML
-      pending("an entity decoder")
+    it "should escape directly appended text" do
       @xml.div { |x| x << "<h&i>"; x.em("H&R Block") }
-      @xml.target!.should == %{<div><h&i><em>H&amp;R Block</em></div>}
+      @xml.target!.should == "<div>&lt;h&amp;i&gt;<em>H&amp;R Block</em></div>"
     end
     
     it "should not double-escape content" do
@@ -178,11 +176,9 @@ describe FasterBuilder::XmlMarkup do
       @xml.target!.should == %{<sample escaped="This&amp;That" unescaped="Here&amp;There"/>}
     end
     
-    it "should not escape symbolize attributes" do
-      # TODO: figure out if I want to allow users to muck up attributes
-      pending("an entity decoder")
+    it "should escape symbolize attributes" do
       @xml.ref(:id => :"H&amp;R")
-      @xml.target!.should == %{<ref id="H&amp;R"/>}
+      @xml.target!.should == %{<ref id="H&amp;amp;R"/>}
     end
     
   end
@@ -272,11 +268,9 @@ describe FasterBuilder::XmlMarkup do
       @xml.target!.should == "<?abc version=\"0.9\"?>\n"
     end
     
-    it "should generate nested XML prologs" do
-      # TODO: find out if this is legal XML
-      pending("an evaluation of whether or not we want FasterBuilder to do this crazy thing")
+    it "should NOT generate nested XML prologs" do
       @xml.p { @xml.instruct! :xml }
-      @xml.target!.should match(%r{<p>\n  <\?xml version="1.0" encoding="UTF-8"\?>\n</p>\n})
+      @xml.target!.should == %{<?xml version="1.0" encoding="UTF-8"?>\n<p/>}
     end
     
     it "should generate non-XML prologs without attributes" do
