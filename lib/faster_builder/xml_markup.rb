@@ -69,6 +69,7 @@ class FasterBuilder::XmlMarkup < BlankSlate
       attrs = options[1] || {}
     end
     
+    # OPTIMIZE: figure out a way to assign these on node creation
     for attr, value in attrs
       node[attr.to_s] = value.to_s
     end
