@@ -2,9 +2,9 @@ require "builder"
 require "faster_builder"
 
 # A Builder::XmlMarkup-alike which uses libxml-ruby to generate XML.
-#
+# 
 # Example:
-#
+#   
 #   xml = FasterBuilder::XmlMarkup.new
 #   xml.instruct!
 #   xml.entries(:count => 1) do
@@ -17,11 +17,12 @@ require "faster_builder"
 #       end
 #     end
 #   end
-#
+#   
 class FasterBuilder::XmlMarkup < BlankSlate
   
   # Creates a new FasterBuilder::XmlMarkup instance.
   def initialize(options = {})
+    # TODO: add indentation support, if possible
     @options = options
     @nodes   = [nil]
     @current_node = nil
@@ -47,6 +48,7 @@ class FasterBuilder::XmlMarkup < BlankSlate
   end
   
   def declare!(inst, *args, &block)
+    # TODO: figure out how to generate declarations
     raise NotImplementedError, "libxml-ruby doesn't support generating declarations"
   end
   
