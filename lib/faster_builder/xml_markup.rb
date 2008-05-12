@@ -1,8 +1,26 @@
 require "builder"
 require "faster_builder"
 
+# A Builder::XmlMarkup-alike which uses libxml-ruby to generate XML.
+#
+# Example:
+#
+#   xml = FasterBuilder::XmlMarkup.new
+#   xml.instruct!
+#   xml.entries(:count => 1) do
+#     xml.comment!("blah blah blah")
+#     xml.entry do
+#       xml.id(40)
+#       xml.title("Happiness")
+#       xml.contents do
+#         xml.cdata!("Anything does here. &&&<<><> yeah.")
+#       end
+#     end
+#   end
+#
 class FasterBuilder::XmlMarkup < BlankSlate
   
+  # Creates a new FasterBuilder::XmlMarkup instance.
   def initialize(options = {})
     @options = options
     @nodes   = [nil]
