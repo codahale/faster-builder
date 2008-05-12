@@ -53,6 +53,7 @@ spec = Gem::Specification.new do |s|
     ease of use of Builder with the speed and security of libxml.
   EOF
   
+  s.add_dependency('builder', '>= 2.1.2')
   s.add_dependency('libxml-ruby', '>= 0.5.4')
   
   s.files = PKG_FILES.to_a
