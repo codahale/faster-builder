@@ -73,3 +73,47 @@ Rake::GemPackageTask.new(spec) do |pkg|
   pkg.need_zip = true
   pkg.need_tar = true
 end
+
+def build_xml(xml)
+    xml.instruct!
+    xml.nodes do
+      100.times do |i|
+        xml.node(:id => i) do
+          xml.metadata(:name => "Dingo")
+          xml.comment!("moo-cow")
+          xml.cdata!("yee-haw")
+          xml << "content for the stuff"
+        end
+      end
+    end
+  end
+
+task :env do
+  $LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
+  require "benchmark"
+  require "builder/xmlmarkup"
+  require "faster_builder/xml_markup"
+end
+
+desc "Runs a head-to-head benchmark."
+task :benchmark => [:env] do
+  tests = (ENV["COUNT"] || "100").to_i
+
+  Benchmark.bmbm(15) do |x|
+    x.report("builder") { tests.times { build_xml(Builder::XmlMarkup.new) } }
+    x.report("faster-builder") { tests.times { build_xml(FasterBuilder::XmlMarkup.new) } }
+  end
+
+end
+
+desc "Profiles an example usage of FasterBuilder::XmlMarkup."
+task :profile => [:env] do
+  require "rubygems"
+  require "ruby-prof"
+  RubyProf.start
+  100.times { build_xml(FasterBuilder::XmlMarkup.new) }
+  result = RubyProf.stop
+  # Print a flat profile to text
+  printer = RubyProf::FlatPrinter.new(result)
+  printer.print(STDOUT, 0)
+end
