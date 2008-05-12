@@ -87,7 +87,7 @@ class FasterBuilder::XmlMarkup < BlankSlate
     end
     
     @current_node = @current_node.parent
-    return target!
+    return self
   end
   
   def target!
