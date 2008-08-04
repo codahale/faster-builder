@@ -234,7 +234,7 @@ describe FasterBuilder::XmlMarkup do
       @xml.bob do
         @xml.comment!("The flavor is too strong.")
       end
-      @xml.target!.should == %{<bob>\n  <!--The flavor is too strong.-->\n</bob>}
+      @xml.target!.should == %{<bob>\n<!--The flavor is too strong.-->\n</bob>}
     end
     
     it "should add CDATA sections" do
@@ -258,7 +258,7 @@ describe FasterBuilder::XmlMarkup do
     
     it "should indent comments" do
       @xml.p { @xml.comment! "OK" }
-      @xml.target!.should == "<p>\n  <!--OK-->\n</p>"
+      @xml.target!.should == "<p>\n<!--OK-->\n</p>"
     end
     
     it "should generate non-XML prologs" do
