@@ -286,7 +286,7 @@ describe FasterBuilder::XmlMarkup do
     
     it "should generate XML with different encodings" do
       @xml.instruct! :xml, :encoding => "UCS-2"
-      @xml.target!.should == "<\000?\000x\000m\000l\000 \000v\000e\000r\000s\000i\000o\000n\000=\000\"\0001\000.\0000\000\"\000 \000e\000n\000c\000o\000d\000i\000n\000g\000=\000\"\000U\000C\000S\000-\0002\000\"\000?\000>\000\n\000"
+      @xml.target!.should == "\377\376<\000?\000x\000m\000l\000 \000v\000e\000r\000s\000i\000o\000n\000=\000\"\0001\000.\0000\000\"\000 \000e\000n\000c\000o\000d\000i\000n\000g\000=\000\"\000U\000C\000S\000-\0002\000\"\000?\000>\000\n\000"
     end
     
     it "should generate standalone XML prologs" do
