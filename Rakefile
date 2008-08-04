@@ -12,7 +12,7 @@ Spec::Rake::SpecTask.new do |t|
   t.spec_opts = ["-o", "spec/spec.opts"]
   t.rcov = true
   t.rcov_dir = 'doc/coverage'
-  t.rcov_opts = ['--exclude', 'spec\/spec,spec\/.*_spec.rb', "-T"]
+  t.rcov_opts = ["--exclude", "\"gems/*,rcov*,spec\"", "-T"]
 end
 
 CLOBBER.include(
