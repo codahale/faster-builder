@@ -24,7 +24,7 @@ class FasterBuilder::XmlMarkup < BlankSlate
   def initialize(options = {})
     # TODO: add indentation support, if possible
     @options = options
-    @nodes   = [nil]
+    @nodes   = []
     @current_node = nil
   end
   
@@ -34,8 +34,6 @@ class FasterBuilder::XmlMarkup < BlankSlate
     encoding = attrs[:encoding] || "UTF-8"
     @doc = XML::Document.new(version)
     @doc.encoding = encoding
-    @nodes[0] = @doc
-    @instructed = true
   end
   
   def cdata!(data)
@@ -92,11 +90,7 @@ class FasterBuilder::XmlMarkup < BlankSlate
   end
   
   def target!
-    if @instructed
-      return @nodes.map { |n| n.to_s }.join("")
-    else
-      return @nodes[1..-1].map { |n| n.to_s }.join("")
-    end
+    return (@doc.nil? ? @nodes : [@doc] + @nodes).map { |n| n.to_s }.join("")
   end
   
   def text!(text)
